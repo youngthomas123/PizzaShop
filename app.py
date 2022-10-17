@@ -21,7 +21,7 @@ def login_page():
 
 
 data = []
-@app.route('/admin', methods = ['POST'])
+@app.route('/orderUpdate', methods = ['POST'])
 def get_data():
     receivedData = request.get_json()
     newData = (receivedData['countdown'],
@@ -32,4 +32,4 @@ def get_data():
         data.pop(0)
         
     data.append(newData)
-    return redirect('/')
+    return "OK", 200
