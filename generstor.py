@@ -47,6 +47,7 @@ def setup():
     board = CustomPymata4(com_port = "COM6")
     board.set_pin_mode_digital_input_pullup(BUTTON1PIN)
     board.set_pin_mode_dht(DHTPIN, sensor_type=11, differential=.05)
+    board.set_pin_mode_tone(3)
 
 def countdown(t):
 
@@ -64,8 +65,8 @@ def countdown(t):
 
 def button_press():
 
-    """arg: button press on the rich shield converted to the keypresses Ctrl + c
-    return: button 1 on the rich shield is now Ctrl + c"""
+    """arg: button press on the rich shield converted to the keypresses ctrl + c
+    return: button 1 on the rich shield is now ctrl + c"""
 
     level, time_stamp = board.digital_read(BUTTON1PIN)
     if level == 1:
@@ -76,13 +77,25 @@ def button_press():
         keyboard.release(Key.ctrl)
 
 setup()
-button_press()
-while True:
-    try:
-        countdown(900)
-    except KeyboardInterrupt: #crtl+C
-        board.digital_write(RED_LED, 0)
-        board.digital_write(GREEN_LED, 1)
-        print ('shutdown')
-        board.shutdown()
-        sys.exit(0)
+with open('generations.csv', 'w', newline='') as gens:
+    while True:
+        button_press()
+        data = [countdown, current_temp, current_time, "sensorID: 4942167"]
+        dataCSV = [current_time()]
+        writer = csv.writer(gens)
+        writer.writerow(dataCSV)
+        time.sleep(5)
+        jsonData = {'countdown' : countdown(900),
+        'time' : current_time(),
+        'temp' : current_temp(),
+        }
+        try:
+            countdown(900)
+        except KeyboardInterrupt: # crtl+C
+            board.digital_write(RED_LED, 0)
+            board.digital_write(GREEN_LED, 1)
+            board.play_tone(3, 1000, 1000)
+            print ('shutdown')
+            board.shutdown()
+            sys.exit(0)
+        response = requests.post("http://145.93.172.169:5000/admin", json = jsonData)
