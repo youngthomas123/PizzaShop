@@ -16,15 +16,37 @@ h1, h2, h3, h4, h5, h6{
 	width: 100%;
 	max-width: 1152px;
 	margin: 0 auto;
+    text-shadow: 3px 3px 3px #000
 }
+
+/* INTRO */
 
 .intro{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 	width: 100%;
 	height: 100vh;
-
-	background: url('1.jpg') center no-repeat;
+	background: url('1.png') center no-repeat;
 	background-size: cover;
 }
+
+.intro__inner{
+	width: 100%;
+	max-width: 880px;
+	margin: 0 auto;
+}
+
+.intro__title{
+	color: #fff;
+	font-size: 90px;
+	font-weight: 70;
+	text-transform: uppercase;
+	text-align: center;
+	line-height: 1;
+}
+
+/* HEADER */
 
 .header{
     width: 100%;
@@ -55,12 +77,30 @@ h1, h2, h3, h4, h5, h6{
 .nav__link{
 	display: inline-block;
 	vertical-align: top;
+	position: relative;
 	color: #fff;
 	text-decoration: none;
-
 	transition: color .3s linear;
+}
+
+.nav__link:after{
+	content: "";
+	display: block;
+	width: 100%;
+	height: 3px;
+	background-color: #f5e25e;
+	opacity: 0;
+	position: absolute;
+	top: 100%;
+	left: 0;
+	z-index: 1;
+	transition: opacity .3s linear;
 }
 
 .nav__link:hover{
 	color: #f5e25e;
+}
+
+.nav__link:hover:after{
+	opacity: 1;
 }
