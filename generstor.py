@@ -67,19 +67,28 @@ def countdown(t):
         if t == 0:
             break
 
-def oven1():
+def oven1(t):
     global data
     global response
     global buttonState2
     with open('generations.csv', 'w', newline='') as gens:
         while True:
-                data = [countdown, current_temp, current_time, "sensorID: 4942167"]
+                mins, secs = divmod(t, 60)
+                timer = '{:02d}.{:02d}'.format(mins, secs)
+                print(timer, end="\r")
+                time.sleep(1)
+                t -= 1
+                board.displayShow(timer)
+                board.digital_write(RED_LED, 1)
+                if t == 1:
+                    break
+                data = [timer, current_temp, current_time, "sensorID: 4942167"]
                 dataCSV = [current_time()]
                 writer = csv.writer(gens)
                 writer.writerow(dataCSV)
                 time.sleep(5)
                 print("working")
-                jsonData = {'countdown' : int(countdown(t)),
+                jsonData = {'countdown' : timer,
                 'time' : current_time(),
                 'temp' : current_temp()}
                 response = requests.post("http://127.0.0.1:5000/orderUpdate", json = jsonData)
@@ -94,4 +103,4 @@ def oven1():
                     sys.exit(0)
 
 setup()
-oven1()
+oven1(900)
