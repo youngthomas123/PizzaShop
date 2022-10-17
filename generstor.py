@@ -1,5 +1,4 @@
 from datetime import datetime
-from re import T
 import time 
 import requests
 from fhict_cb_01.CustomPymata4 import CustomPymata4
@@ -55,6 +54,7 @@ def countdown(t):
     return: a timer with mintues and seconds"""
 
     while t:
+        global pizzaStatus
         mins, secs = divmod(t, 60)
         timer = '{:02d}.{:02d}'.format(mins, secs)
         print(timer, end="\r")
@@ -62,6 +62,10 @@ def countdown(t):
         t -= 1
         board.displayShow(timer)
         board.digital_write(RED_LED, 1)
+        if timer == 0:
+            pizzaStatus = "The pizza is ready"
+        else:
+            pizzaStatus = "The pizza is not ready yet"
 
 def button_press():
 
@@ -88,7 +92,8 @@ with open('generations.csv', 'w', newline='') as gens:
         jsonData = {'countdown' : countdown(900),
         'time' : current_time(),
         'temp' : current_temp(),
-        }
+        'pizza' : pizzaStatus}
+        response = requests.post("http://127.0.0.1:5000/admin", json = jsonData)
         try:
             countdown(900)
         except KeyboardInterrupt: # crtl+C
@@ -98,4 +103,3 @@ with open('generations.csv', 'w', newline='') as gens:
             print ('shutdown')
             board.shutdown()
             sys.exit(0)
-        response = requests.post("http://145.93.172.169:5000/admin", json = jsonData)

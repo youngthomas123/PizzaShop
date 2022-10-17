@@ -1,8 +1,6 @@
 from flask import Flask, render_template, request, redirect
 
 app = Flask(__name__)
-data = []
-
 
 @app.route('/')
 def menu_page():
@@ -16,7 +14,8 @@ def sign_up_page():
 def login_page():
     return render_template('login.html')
 
-@app.route('/ovendata', methods = ['POST'])
+data = []
+@app.route('/admin', methods = ['POST'])
 def get_data():
     receivedData = request.get_json()
     newData = (receivedData['countdown'],
