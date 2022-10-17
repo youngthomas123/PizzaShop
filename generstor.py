@@ -11,8 +11,10 @@ from pynput.keyboard import Key, Controller #To make this import work, open comm
 DHTPIN = 12
 RED_LED = 4
 GREEN_LED = 5
-BUTTON1PIN = 8
+BUTTON2 = 9
+BUTTON1 = 8
 BUZZER = 3
+BUTTON_PRESSED = 0
 keyboard = Controller() #Function to make keys simulated in the code.
 
 def current_time():
@@ -44,7 +46,7 @@ def setup():
 
     global board
     board = CustomPymata4(com_port = "COM6")
-    board.set_pin_mode_digital_input_pullup(BUTTON1PIN)
+    board.set_pin_mode_digital_input_pullup(BUTTON2)
     board.set_pin_mode_dht(DHTPIN, sensor_type=11, differential=.05)
     board.set_pin_mode_tone(3)
 
@@ -67,39 +69,27 @@ def countdown(t):
         else:
             pizzaStatus = "The pizza is not ready yet"
 
-def button_press():
-
-    """arg: button press on the rich shield converted to the keypresses ctrl + c
-    return: button 1 on the rich shield is now ctrl + c"""
-
-    level, time_stamp = board.digital_read(BUTTON1PIN)
-    if level == 1:
-        keyboard.press(Key.ctrl)
-        keyboard.press('c')
-        time.sleep(0.1)
-        keyboard.release('c')
-        keyboard.release(Key.ctrl)
-
 setup()
 with open('generations.csv', 'w', newline='') as gens:
     while True:
-        button_press()
-        data = [countdown, current_temp, current_time, "sensorID: 4942167"]
-        dataCSV = [current_time()]
-        writer = csv.writer(gens)
-        writer.writerow(dataCSV)
-        time.sleep(5)
-        jsonData = {'countdown' : countdown(900),
-        'time' : current_time(),
-        'temp' : current_temp(),
-        'pizza' : pizzaStatus}
-        response = requests.post("http://127.0.0.1:5000/admin", json = jsonData)
-        try:
-            countdown(900)
-        except KeyboardInterrupt: # crtl+C
-            board.digital_write(RED_LED, 0)
-            board.digital_write(GREEN_LED, 1)
-            board.play_tone(3, 1000, 1000)
-            print ('shutdown')
-            board.shutdown()
-            sys.exit(0)
+        buttonState2 = board.digital_read(BUTTON2)
+        if (buttonState2[0] == BUTTON_PRESSED):
+            data = [countdown, current_temp, current_time, "sensorID: 4942167"]
+            dataCSV = [current_time()]
+            writer = csv.writer(gens)
+            writer.writerow(dataCSV)
+            time.sleep(5)
+            jsonData = {'countdown' : countdown(900),
+            'time' : current_time(),
+            'temp' : current_temp(),
+            'pizza' : pizzaStatus}
+            response = requests.post("http://127.0.0.1:5000/admin", json = jsonData)
+            try:
+                countdown(900)
+            except KeyboardInterrupt: # crtl+C
+                board.digital_write(RED_LED, 0)
+                board.digital_write(GREEN_LED, 1)
+                board.play_tone(3, 1000, 1000)
+                print ('shutdown')
+                board.shutdown()
+                sys.exit(0)
