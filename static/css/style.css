@@ -25,3 +25,42 @@ h1, h2, h3, h4, h5, h6{
 	background: url('1.jpg') center no-repeat;
 	background-size: cover;
 }
+
+.header{
+    width: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.header__inner{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.header__logo{
+	font-size: 45px;
+	font-weight: 700;
+	color: #fff;
+}
+
+.nav{
+	font-size: 20px;
+	text-transform: uppercase;
+}
+
+.nav__link{
+	display: inline-block;
+	vertical-align: top;
+	color: #fff;
+	text-decoration: none;
+
+	transition: color .3s linear;
+}
+
+.nav__link:hover{
+	color: #f5e25e;
+}
