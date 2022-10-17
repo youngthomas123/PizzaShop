@@ -4,5 +4,5 @@ app = Flask(__name__)
 
 @app.route('/')
 def menu_page():
-    return render_template ('menu.html')
+    return render_template ('index.html')
 
