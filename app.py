@@ -4,15 +4,21 @@ app = Flask(__name__)
 
 @app.route('/')
 def menu_page():
-    return render_template ('index.html')
+     return render_template('admin.html', ovenData = data)
+
+
 
 @app.route('/sign_up')
 def sign_up_page():
     return render_template('signup.html')
 
+
+
 @app.route('/login')
 def login_page():
     return render_template('login.html')
+
+
 
 data = []
 @app.route('/admin', methods = ['POST'])
@@ -28,7 +34,6 @@ def get_data():
     data.append(newData)
     return redirect('/')
 
-@app.route('/')
-def index():
 
-    return render_template("admin.html", ovenData = data)
+
+   
