@@ -81,7 +81,6 @@ while True:
     try:
         countdown(900)
     except KeyboardInterrupt: #crtl+C
-        tone(3 )
         board.digital_write(RED_LED, 0)
         board.digital_write(GREEN_LED, 1)
         print ('shutdown')
