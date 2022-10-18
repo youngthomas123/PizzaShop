@@ -47,7 +47,7 @@ def setup():
     return: Arduino connection and rich shield."""
 
     global board
-    board = CustomPymata4(com_port = "COM6")
+    board = CustomPymata4(com_port = "COM3")
     board.set_pin_mode_digital_input_pullup(BUTTON2)
     board.set_pin_mode_digital_input_pullup(BUTTON1)
     board.set_pin_mode_dht(DHTPIN, sensor_type=11, differential=.05)

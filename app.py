@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def menu_page():
-     return render_template('admin.html', ovenData = data)
+     return render_template('index.html')
 
 
 
@@ -20,6 +20,12 @@ def login_page():
 
 
 
+@app.route('/admin')
+def admin_page():
+    return render_template('admin.html', ovenData = data)
+
+
+
 data = []
 @app.route('/orderUpdate', methods = ['POST'])
 def get_data():
@@ -32,4 +38,4 @@ def get_data():
         data.pop(0)
         
     data.append(newData)
-    return "OK", 200
+    return redirect ('/admin')
