@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def menu_page():
-     return render_template('admin.html', ovenData = data)
+     return render_template('index.html')
 
 
 
