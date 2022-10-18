@@ -40,3 +40,38 @@ def get_data():
         
     data.append(newData)
     return redirect ('/admin')
+
+
+
+login_base={
+    1 : {'username':'mario', 'password': 'italy'},
+    2: {'username' : 'luigi' , 'password': 'italianpizza'}
+}
+
+check_login =False
+@app.route('/admin_login', methods = ['POST'])
+def admin_login():
+    check_login =False
+    
+    login = request.form
+    name =login ['sent_username']
+    password = login['sent_password']
+    for _ in login_base :
+        if(name== login_base[_]['username'] and password == login_base[_]['password']) :
+            check_login= True
+            break
+    if (check_login==True):
+        return redirect('/')
+    else :
+        return redirect('/admin')
+    
+       
+
+
+
+
+
+    
+    
+
+    

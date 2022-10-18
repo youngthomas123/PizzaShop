@@ -5,7 +5,7 @@ from fhict_cb_01.CustomPymata4 import CustomPymata4
 from datetime import datetime
 import time
 import csv
-import multiprocessing
+import time, sys
 
 DHTPIN = 12
 RED_LED = 4
@@ -35,10 +35,7 @@ def current_temp():
 
     global temperature
     humidity, temperature, timestamp = board.dht_read(DHTPIN)
-    if temperature > 0 :
-        return temperature
-    if temperature == 0 :
-        return "None"
+    return temperature
 
 def setup():
 
@@ -53,9 +50,27 @@ def setup():
     board.set_pin_mode_dht(DHTPIN, sensor_type=11, differential=.05)
     board.set_pin_mode_tone(3)
 
-def oven(t):
-    global ovenResponse
+def countdown(t):
+
+    """arg: Countdown that you can set to a fixed time, formatted into minutes and seconds.
+    return: a timer with mintues and seconds"""
+
+    while t > 0:
+        global timer
+        mins, secs = divmod(t, 60)
+        timer = '{:02d}.{:02d}'.format(mins, secs)
+        print(timer, end="\r")
+        time.sleep(1)
+        t -= 1
+        board.displayShow(timer)
+        board.digital_write(RED_LED, 1)
+        if t == 0:
+            break
+
+def oven1(t):
+    global data
     global response
+    global buttonState2
     with open('generations.csv', 'w', newline='') as gens:
         while True:
             ovenResponse = "OVEN IS ON"
