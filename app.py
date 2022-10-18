@@ -30,11 +30,12 @@ data = []
 @app.route('/orderUpdate', methods = ['POST'])
 def get_data():
     receivedData = request.get_json()
-    newData = (receivedData['countdown'],
+    newData = (receivedData['ovenResponse'],
+    receivedData['countdown'],
     receivedData['time'],
     receivedData['temp'])
 
-    if len(data) >= 15:
+    if len(data) >= 1:
         data.pop(0)
         
     data.append(newData)

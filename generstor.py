@@ -47,7 +47,7 @@ def setup():
     return: Arduino connection and rich shield."""
 
     global board
-    board = CustomPymata4(com_port = "COM3")
+    board = CustomPymata4(com_port = "COM6")
     board.set_pin_mode_digital_input_pullup(BUTTON2)
     board.set_pin_mode_digital_input_pullup(BUTTON1)
     board.set_pin_mode_dht(DHTPIN, sensor_type=11, differential=.05)
@@ -58,7 +58,7 @@ def oven(t):
     global response
     with open('generations.csv', 'w', newline='') as gens:
         while True:
-            ovenResponse = "Oven is on"
+            ovenResponse = "OVEN IS ON"
             mins, secs = divmod(t, 60)
             timer = '{:02d}.{:02d}'.format(mins, secs)
             print(timer, end="\r")
@@ -68,8 +68,9 @@ def oven(t):
             board.digital_write(GREEN_LED, 0)
             board.digital_write(RED_LED, 1)
             if t == 0:
-                ovenResponse = "pizza is ready"
+                ovenResponse = "PIZZA IS READY"
                 print ("pizza is ready")
+                timer = '00.00'
                 break
             dataCSV = [current_time()]
             writer = csv.writer(gens)
@@ -83,7 +84,7 @@ def oven(t):
             buttonState2 = board.digital_read(BUTTON2)
             if (buttonState2[0] == BUTTON_PRESSED):
                 timer = '00.00'
-                ovenResponse = "oven is turned off"
+                ovenResponse = "OVEN IS OFF"
                 board.digital_write(RED_LED, 0)
                 board.digital_write(GREEN_LED, 1)
                 board.play_tone(3, 1000, 1000)
@@ -92,7 +93,8 @@ def oven(t):
 
 setup()
 while True:
+    timer = '00.00'
     buttonState1 = board.digital_read(BUTTON1)
     time.sleep(0.1)
     if (buttonState1[0] == BUTTON_PRESSED):
-        oven(900)
+        oven(10)
