@@ -45,7 +45,7 @@ def get_data():
 
 login_base={
     1 : {'username':'mario', 'password': 'italy'},
-    2: {'username' : 'luigi' , 'password': 'italianpizza'}
+    2 : {'username' : 'luigi' , 'password': 'italianpizza'}
 }
 
 check_login =False

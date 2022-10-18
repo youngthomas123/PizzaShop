@@ -5,7 +5,6 @@ from fhict_cb_01.CustomPymata4 import CustomPymata4
 from datetime import datetime
 import time
 import csv
-import time, sys
 
 DHTPIN = 12
 RED_LED = 4
@@ -68,7 +67,6 @@ def countdown(t):
             break
 
 def oven1(t):
-    global data
     global response
     global buttonState2
     with open('generations.csv', 'w', newline='') as gens:
@@ -85,12 +83,11 @@ def oven1(t):
             if t == 0:
                 ovenResponse = "PIZZA IS READY"
                 print ("pizza is ready")
-                timer = '00.00'
                 break
             dataCSV = [current_time()]
             writer = csv.writer(gens)
             writer.writerow(dataCSV)
-            time.sleep(0.4)
+            time.sleep(0.25)
             jsonData = {'ovenResponse' : ovenResponse,
             'countdown' : timer,
             'time' : current_time(),
@@ -98,7 +95,6 @@ def oven1(t):
             response = requests.post("http://127.0.0.1:5000/orderUpdate", json = jsonData)
             buttonState2 = board.digital_read(BUTTON2)
             if (buttonState2[0] == BUTTON_PRESSED):
-                timer = '00.00'
                 ovenResponse = "OVEN IS OFF"
                 board.digital_write(RED_LED, 0)
                 board.digital_write(GREEN_LED, 1)
@@ -107,9 +103,8 @@ def oven1(t):
                 break
 
 setup()
+time.sleep(0.25)
 while True:
-    timer = '00.00'
     buttonState1 = board.digital_read(BUTTON1)
-    time.sleep(0.1)
     if (buttonState1[0] == BUTTON_PRESSED):
-        oven(10)
+        oven1(10)
