@@ -81,7 +81,7 @@ def oven1(t):
                 board.displayShow(timer)
                 board.digital_write(RED_LED, 1)
                 if t == 1:
-                    break
+                    return "pizza is ready"
                 data = [timer, current_temp, current_time, "sensorID: 4942167"]
                 dataCSV = [current_time()]
                 writer = csv.writer(gens)
@@ -92,15 +92,14 @@ def oven1(t):
                 'time' : current_time(),
                 'temp' : current_temp()}
                 response = requests.post("http://127.0.0.1:5000/orderUpdate", json = jsonData)
-                buttonState2 = board.digital_read(BUTTON2)
+                buttonState2 = board.digital_read(BUTTON1)
                 print("working")
-                if BUTTON2 == 0:
+                if BUTTON1 == 0:
                     board.digital_write(RED_LED, 0)
                     board.digital_write(GREEN_LED, 1)
                     board.play_tone(3, 1000, 1000)
-                    print ('shutdown')
-                    board.shutdown()
-                    sys.exit(0)
+                    return print ('shutdown oven')
 
 setup()
-oven1(900)
+if BUTTON2 == 0:
+    oven1(900)
