@@ -13,7 +13,6 @@ BUTTON2 = 9
 BUTTON1 = 8
 BUZZER = 3
 BUTTON_PRESSED = 0
-t = 900
 
 def current_time():
 
@@ -69,7 +68,6 @@ def countdown(t):
 def manual_shut_off():
     time.sleep(0.1)
     global ovenResponse
-    global response
     global timer
     ovenResponse = "Off"
     board.digital_write(RED_LED, 0)
@@ -89,6 +87,13 @@ def timer_end():
     ovenResponse = "Pizza is ready"
     print ("pizza is ready")
 
+def send_data_to_app():
+    global response
+    jsonData = {'ovenResponse' : ovenResponse,
+    'countdown' : timer,
+    'time' : current_time(),
+    'temp' : current_temp()}
+    response = requests.post("http://127.0.0.1:5000/orderUpdate", json = jsonData)
 
 def oven1(t):
     global ovenResponse
@@ -105,26 +110,14 @@ def oven1(t):
             board.digital_write(RED_LED, 1)
             if t == 0:
                 timer_end()
-                jsonData = {'ovenResponse' : ovenResponse,
-                'countdown' : timer,
-                'time' : current_time(),
-                'temp' : current_temp()}
-                response = requests.post("http://127.0.0.1:5000/orderUpdate", json = jsonData)
+                send_data_to_app()
                 break
             time.sleep(0.7)
-            jsonData = {'ovenResponse' : ovenResponse,
-            'countdown' : timer,
-            'time' : current_time(),
-            'temp' : current_temp()}
-            response = requests.post("http://127.0.0.1:5000/orderUpdate", json = jsonData)
+            send_data_to_app()
             buttonState2 = board.digital_read(BUTTON2)
             if (buttonState2[0] == BUTTON_PRESSED):
                 manual_shut_off()
-                jsonData = {'ovenResponse' : ovenResponse,
-                'countdown' : timer,
-                'time' : current_time(),
-                'temp' : current_temp()}
-                response = requests.post("http://127.0.0.1:5000/orderUpdate", json = jsonData)
+                send_data_to_app()
                 break
 setup()
 time.sleep(0.1)
