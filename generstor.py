@@ -13,7 +13,6 @@ BUTTON2 = 9
 BUTTON1 = 8
 BUZZER = 3
 BUTTON_PRESSED = 0
-t = 900
 
 def current_time():
 
@@ -43,7 +42,7 @@ def setup():
     return: Arduino connection and rich shield."""
 
     global board
-    board = CustomPymata4(com_port = "COM3")
+    board = CustomPymata4(com_port = "COM6")
     board.set_pin_mode_digital_input_pullup(BUTTON2)
     board.set_pin_mode_digital_input_pullup(BUTTON1)
     board.set_pin_mode_dht(DHTPIN, sensor_type=11, differential=.05)
@@ -66,45 +65,66 @@ def countdown(t):
         if t == 0:
             break
 
-def oven1(t):
+def manual_shut_off():
+    time.sleep(0.1)
+    global ovenResponse
+    global timer
+    ovenResponse = "Off"
+    board.digital_write(RED_LED, 0)
+    board.digital_write(GREEN_LED, 1)
+    board.play_tone(3, 1000, 1000)
+    print('shutdown oven')
+    timer = '00.00'
+    return
+
+def timer_end():
+    global timer
+    global ovenResponse
+    board.digital_write(RED_LED, 0)
+    board.digital_write(GREEN_LED, 1)
+    board.play_tone(3, 1000, 1000)
+    timer = '00.00'
+    ovenResponse = "Pizza is ready"
+    print ("pizza is ready")
+
+def send_data_to_app():
     global response
-    global buttonState2
+    jsonData = {'ovenResponse' : ovenResponse,
+    'countdown' : timer,
+    'time' : current_time(),
+    'temp' : current_temp()}
+    response = requests.post("http://127.0.0.1:5000/orderUpdate", json = jsonData)
+
+def oven1(t):
+    global ovenResponse
+    global timer
+    global response
     with open('generations.csv', 'w', newline='') as gens:
         while True:
-            ovenResponse = "OVEN IS ON"
             mins, secs = divmod(t, 60)
             timer = '{:02d}.{:02d}'.format(mins, secs)
             print(timer, end="\r")
-            time.sleep(0.5)
             t -= 1
             board.displayShow(timer)
             board.digital_write(GREEN_LED, 0)
             board.digital_write(RED_LED, 1)
             if t == 0:
-                ovenResponse = "PIZZA IS READY"
-                print ("pizza is ready")
+                timer_end()
+                send_data_to_app()
                 break
-            dataCSV = [current_time()]
-            writer = csv.writer(gens)
-            writer.writerow(dataCSV)
-            time.sleep(0.25)
-            jsonData = {'ovenResponse' : ovenResponse,
-            'countdown' : timer,
-            'time' : current_time(),
-            'temp' : current_temp()}
-            response = requests.post("http://127.0.0.1:5000/orderUpdate", json = jsonData)
+            time.sleep(0.7)
+            send_data_to_app()
             buttonState2 = board.digital_read(BUTTON2)
             if (buttonState2[0] == BUTTON_PRESSED):
-                ovenResponse = "OVEN IS OFF"
-                board.digital_write(RED_LED, 0)
-                board.digital_write(GREEN_LED, 1)
-                board.play_tone(3, 1000, 1000)
-                print ('shutdown oven')
+                manual_shut_off()
+                send_data_to_app()
                 break
-
 setup()
-time.sleep(0.25)
+time.sleep(0.1)
 while True:
+    time.sleep(0.1)
     buttonState1 = board.digital_read(BUTTON1)
     if (buttonState1[0] == BUTTON_PRESSED):
+        ovenResponse = "On"
+        print("oven is on")
         oven1(10)
