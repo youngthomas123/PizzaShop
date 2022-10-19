@@ -33,15 +33,29 @@ def login_page():
 @app.route('/order')
 def order_page():
     # The page where customers and mario can place orders
-    return render_template('order.html')
+    return render_template('order.html',orderlist=orderlist)
 
+
+orderlist = []
+@app.route('/ordering', methods = ['POST'])
+def add_order():
+    global orderlist
+    name = request.form['newname']
+    order = request.form['neworder']
+
+    neworder = (name, order)
+    orderlist.append(neworder)
+    print(neworder)
+    print(orderlist)
+
+    return redirect('/order')
 
 
 
 @app.route('/admin')
 # the page for mario and luigi
 def admin_page():
-    return render_template('admin.html', ovenData = data)
+    return render_template('admin.html', ovenData = data,orderlist=orderlist)
 
 
 
