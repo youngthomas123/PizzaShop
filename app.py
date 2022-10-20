@@ -105,9 +105,9 @@ def admin_login():
             check_login= True
             break
     if (check_login==True):
-        return redirect('/')
-    else :
         return redirect('/admin')
+    else :
+        return redirect('/wrong')
     
        
 
