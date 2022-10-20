@@ -17,9 +17,11 @@ body{
 }
 
 .login_text{
-    font-size: 15px;
+    font-size: 25px;
 	font-weight: 700;
 	color: #fff;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 2px #000
 }
 
 .login{
@@ -29,4 +31,11 @@ body{
     left: 50px;
     z-index: 1000;
     margin: auto 0;
+}
+
+.inputbox{
+    height: 30px;
+    width: 250px;
+    font-size: 18px;
+    box-shadow: 3px 3px 3px #000;
 }

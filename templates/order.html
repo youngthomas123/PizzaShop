@@ -1,12 +1,43 @@
 <!DOCTYPE html>
 
 <html>
+    <head>
+        <title>orders</title>
+    </head>
+    <body>
+        <h1>orders</h1>
 
-<form action="#" method="post">
-	<p>fill in your name (any name, that is recognizable for the cashier): </p>
-	<p><input type="text" name="nm" /></p>
-    <form action ="/payed" method = "post">
-        <button onclick="document.location.href='http://127.0.0.1:5000/order';">pay</button>
-</form>
+        {% if orderlist == [] %}
+          <p>No orderlist at the moment.</p>
+        {% else %}
+          <table>
+            <tr>
+                <th>Name</th>
+                <th>order</th>
+            </tr>
+            {% for (name, order) in orderlist %}
+                <tr>
+                    <td>{{ name }}</td>
+                    <td>{{ order }}</td>
+                </tr>
+            {% endfor %}
+           </table>
+        {% endif %}
+         <br>
 
+        
+            
+        
+         <br>
+
+        <form action="/ordering" method="post">
+            <label>Name:</label><br>
+            <input type="text" name="newname"><br><br>
+            
+            <label>order:</label><br>
+            <input type="text" name="neworder"><br><br><br>
+
+            <input type="submit" value="Ok"></input>
+        </form>
+    </body>
 </html>

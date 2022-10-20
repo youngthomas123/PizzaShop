@@ -1,3 +1,5 @@
+
+
 from flask import Flask, render_template, request, redirect
 
 app = Flask(__name__)
@@ -67,6 +69,9 @@ def get_data():
     receivedData['countdown'],
     receivedData['time'],
     receivedData['temp'])
+    print (receivedData)
+    print(newData)
+    print(data)
 
     if len(data) >= 1:
         data.pop(0)

@@ -4,6 +4,7 @@ import requests
 from fhict_cb_01.CustomPymata4 import CustomPymata4
 from datetime import datetime
 import time
+import csv
 
 DHTPIN = 12
 RED_LED = 4
@@ -41,7 +42,7 @@ def setup():
     return: Arduino connection and rich shield."""
 
     global board
-    board = CustomPymata4(com_port = "COM6")
+    board = CustomPymata4(com_port = "COM3")
     board.set_pin_mode_digital_input_pullup(BUTTON2)
     board.set_pin_mode_digital_input_pullup(BUTTON1)
     board.set_pin_mode_dht(DHTPIN, sensor_type=11, differential=.05)
@@ -65,10 +66,6 @@ def countdown(t):
             break
 
 def manual_shut_off():
-
-    """arg: This function makes it so that if there is a manual shutdown of the arduino (button click) a unique message will appear.
-    Return: the ovenResponse is Off"""
-
     time.sleep(0.1)
     global ovenResponse
     global timer
@@ -81,10 +78,6 @@ def manual_shut_off():
     return
 
 def timer_end():
-
-    """arg: if the timer ends this means the pizza is ready, so it needs a unique message.
-    return: the ovenResponse is pizza is ready"""
-
     global timer
     global ovenResponse
     board.digital_write(RED_LED, 0)
@@ -95,10 +88,6 @@ def timer_end():
     print ("pizza is ready")
 
 def send_data_to_app():
-
-    """arg: everytime the while loop for the oven breaks it will send the last needed data to the flask server to keep the html up to date as well.
-    retrun: the current arduino data, current time and ovenResponse."""
-
     global response
     jsonData = {'ovenResponse' : ovenResponse,
     'countdown' : timer,
@@ -107,10 +96,6 @@ def send_data_to_app():
     response = requests.post("http://127.0.0.1:5000/orderUpdate", json = jsonData)
 
 def oven1(t):
-
-    """arg: oven1 function creates puts all needed function together so that the arduino data, timer for the oven will be added.
-    return: current time, the timer for the pizza, temperature and the button to manually stop """
-
     global ovenResponse
     global timer
     global response
