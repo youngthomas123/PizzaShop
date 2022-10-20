@@ -32,6 +32,11 @@ def login_page():
     return render_template('login.html')
 
 
+app.route('/wrong')
+def wrong_username():
+    return render_template('wrong.html')
+
+
 @app.route('/order')
 def order_page():
     # The page where customers and mario can place orders
