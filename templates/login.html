@@ -1,16 +1,31 @@
-<html>
-    
-    <body>
-        <form action="/admin_login" method="post">
-            <label>username:</label><br>
-            <input type="text" name="sent_username"><br><br>
-            
-            <label>password:</label><br>
-            <input type="password" name="sent_password"><br><br><br>
+<!DOCTYPE html>
+<html lang="eu">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400&display=swap" rel="stylesheet">
+    <title>ATA login page</title>
+</head>
 
-            <input type="submit" value="login"></input>
+<body>
+    <div class="login">
+        <form action="/admin_login" method="post">
+            <div class="login_text">
+                <label>username:</label><br>
+                <input type="text" name="sent_username"><br><br>
+                    
+                <label>password:</label><br>
+                <input type="text" name="sent_password"><br><br><br>
+
+                <input type="submit" value="login"></input>
+            </div>
         </form>
-    </body>
-</html>
+    </div>
+    <div class="background">
+    </div>
+</body>
+
 
 
