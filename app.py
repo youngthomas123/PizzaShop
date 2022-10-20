@@ -1,7 +1,7 @@
 
 
 from flask import Flask, render_template, request, redirect
-
+import csv
 app = Flask(__name__)
 
 
@@ -35,20 +35,29 @@ def login_page():
 @app.route('/order')
 def order_page():
     # The page where customers and mario can place orders
-    return render_template('order.html',orderlist=orderlist)
+    return render_template('order.html',orderlist=orderList)
 
+with open('generations.csv', 'w', newline='') as o:
+    writer = csv.writer(o)
 
-orderlist = []
+orderList = []
 @app.route('/ordering', methods = ['POST'])
 def add_order():
-    global orderlist
+    global orderList
+    global lentghOrder
+    lentghOrder = len(orderList)
     name = request.form['newname']
     order = request.form['neworder']
 
     neworder = (name, order)
-    orderlist.append(neworder)
+    with open('orderData.csv', 'w', newline='') as o:
+        writer = csv.writer(o)
+        writer.writerow(orderList)
+    orderList.append(neworder)
     print(neworder)
-    print(orderlist)
+    print(orderList)
+    if lentghOrder > 15:
+        orderList.pop(0)
 
     return redirect('/order')
 
@@ -57,7 +66,8 @@ def add_order():
 @app.route('/admin')
 # the page for mario and luigi
 def admin_page():
-    return render_template('admin.html', ovenData = data,orderlist=orderlist)
+
+    return render_template('admin.html', ovenData = data,orderlist=orderList)
 
 
 
