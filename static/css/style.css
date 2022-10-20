@@ -175,24 +175,24 @@ h1, h2, h3, h4, h5, h6{
 	box-shadow: 3px 3px 3px #000;
 }
 
-.grid_item:hover .grid_image{
+.grid__item:hover .grid__image{
 	transform: translate3d(-30px, -30px, 0);
 }
 
-.grid_item:hover .grid_image img{
+.grid__item:hover .grid__image img{
 	opacity: .1;
 }
 
-.grid_item:hover .grid_text{
+.grid__item:hover .grid__text{
 	opacity: 1;
 }
-.grid_item:hover .gridtext_down{
+.grid__item:hover .grid_text_down{
 	opacity: 1;
 }
-.grid_item:hover .gridtextdown_2{
+.grid__item:hover .grid_textdown_2{
 	opacity: 1;
 }
-.grid_item:hover .gridtextdown_3{
+.grid__item:hover .grid_textdown_3{
 	opacity: 1;
 }
 
@@ -203,7 +203,7 @@ h1, h2, h3, h4, h5, h6{
 
 .grid__image{
 	background: linear-gradient(to bottom, #f38181, #fce38a);
-	transition: transform .1s linear;
+	transition: transform .1s linear
 }
 
 .grid__text{
@@ -257,5 +257,5 @@ h1, h2, h3, h4, h5, h6{
     position: absolute;
     top: 17%;
     right: -42px;
-    z-index: 2;
+    z-index: 2;
 }
