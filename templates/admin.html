@@ -9,18 +9,13 @@
             </tr>
             {% for data in ovenData %}
                 {% for (name, order) in orderlist %}
-                    {% if lengthOrder > 2 %}
-                    <p> Queuing order</p>
-                    {% endif %}
             <tr>
                 <th>{{data[0]}}</th>
                 <th>{{data[1]}}</th>
                 <th>{{data[2]}}</th>
                 <th>{{data[3]}}</th>
-                
-                
-                    <td>{{ name }}</td>
-                    <td>{{ order }}</td>
+                <th>{{ name }}</th>
+                <th>{{ order }}</th>
                 
             </tr>
                 {% endfor %}

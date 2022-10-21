@@ -37,15 +37,13 @@ def order_page():
     # The page where customers and mario can place orders
     return render_template('order.html',orderlist=orderList)
 
-with open('generations.csv', 'w', newline='') as o:
-    writer = csv.writer(o)
-
 orderList = []
 @app.route('/ordering', methods = ['POST'])
 def add_order():
+    global neworder
     global orderList
-    global lentghOrder
-    lentghOrder = len(orderList)
+    global lengthOrder
+    lengthOrder = len(orderList)
     name = request.form['newname']
     order = request.form['neworder']
 
@@ -56,9 +54,8 @@ def add_order():
     orderList.append(neworder)
     print(neworder)
     print(orderList)
-    if lentghOrder > 15:
+    if lengthOrder > 15:
         orderList.pop(0)
-
     return redirect('/order')
 
 
@@ -66,7 +63,11 @@ def add_order():
 @app.route('/admin')
 # the page for mario and luigi
 def admin_page():
-
+    global order
+    if lengthOrder > 1:
+        order = 
+    
+        
     return render_template('admin.html', ovenData = data,orderlist=orderList)
 
 
@@ -105,9 +106,9 @@ def admin_login():
             check_login= True
             break
     if (check_login==True):
-        return redirect('/')
-    else :
         return redirect('/admin')
+    else :
+        return redirect('/')
     
        
 

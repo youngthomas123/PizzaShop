@@ -114,6 +114,7 @@ def oven1(t):
         send_data_to_app()
         buttonState2 = board.digital_read(BUTTON2)
         if (buttonState2[0] == BUTTON_PRESSED):
+            
             manual_shut_off()
             send_data_to_app()
             break
