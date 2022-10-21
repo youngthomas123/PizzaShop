@@ -6,6 +6,16 @@
     <body>
         <table>
             <td>Oven</td><td>Timer oven</td><td>Time</td><td>Temperature</td><td>Name</td><td>Order </td>
+        {%for order in orderlist%} 
+        <table style="width:100%">
+            <tr>
+             
+              <th>oven Response</th>
+              <th>countdown </th>
+              <th>time</th>
+              <th>temp</th> 
+              <th>order </th>
+              
             </tr>
             {% for data in ovenData %}
                 {% for (name, order) in orderlist %}
@@ -22,8 +32,6 @@
                     <td>{{ name }}</td>
                     <td>{{ order }}</td>
                 
-            </tr>
-            <tr>
               <td> {{oven_data["ovenResponse"]}}  </td>
               <td> {{oven_data["countdown"]}} </td>
               <td> {{oven_data["time"]}} </td>
@@ -33,7 +41,12 @@
               <td>{{order}} </td>
               
             </tr>
+                {% endfor %}
+
+            {%endfor%}
+
             
+        </table>
           </table>
           {% endfor %}
     </body>
