@@ -4,30 +4,29 @@
         <meta http-equiv="refresh" content="1">
     </head>
     <body>
-        <table>
-            <td>Oven</td><td>Timer oven</td><td>Time</td><td>Temperature</td><td>Name</td><td>Order </td>
-            </tr>
-            {% for data in ovenData %}
-                {% for (name, order) in orderlist %}
-                    {% if lengthOrder > 2 %}
-                    <p> Queuing order</p>
-                    {% endif %}
+        {%for order in orderlist%} 
+        <table style="width:100%">
             <tr>
-                <th>{{data[0]}}</th>
-                <th>{{data[1]}}</th>
-                <th>{{data[2]}}</th>
-                <th>{{data[3]}}</th>
-                
-                
-                    <td>{{ name }}</td>
-                    <td>{{ order }}</td>
-                
+             
+              <th>oven Response</th>
+              <th>countdown </th>
+              <th>time</th>
+              <th>temp</th> 
+              <th>order </th>
+              
             </tr>
-                {% endfor %}
-
-            {%endfor%}
-
+            <tr>
+              <td> {{oven_data["ovenResponse"]}}  </td>
+              <td> {{oven_data["countdown"]}} </td>
+              <td> {{oven_data["time"]}} </td>
+              <td> {{oven_data["temp"]}}</td>
+              
+              <td>{{order_id}} </td>
+              <td>{{order}} </td>
+              
+            </tr>
             
-        </table>
+          </table>
+          {% endfor %}
     </body>
 </html>

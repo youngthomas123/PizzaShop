@@ -5,43 +5,57 @@
         <title>orders</title>
     </head>
     <body>
-        <h1>orders</h1>
+      {% if orderlist == [] %}
+      <p>No volunteers at the moment.</p>
+  {% else %}
+      <table>
+          <tr>
+              <th>id</th>
+              <th>order</th>
+          </tr>
+          {% for order in orderlist %}
+              <tr>
+                  <td>{{ order_id }}</td>
+                  <td>{{ order }}</td>
+              </tr>
+          {% endfor %}
+      </table>
+  {% endif %}
+  <br><br>
 
-        {% if orderlist == [] %}
-          <p>No orderlist at the moment.</p>
-        {% else %}
-          <table>
-            <tr>
-                <th>Name</th>
-                <th>order</th>
-            </tr>
-            {% for (name, order) in orderlist %}
-                <tr>
-                    <td>{{ name }}</td>
-                    <td>{{ order }}</td>
-                </tr>
-            {% endfor %}
-           </table>
-        {% endif %}
-         <br>
 
+
+
+
+        <form action="/ordering" method= "post">
             
+            <input type="hidden" id="001" name="pizza" value="peperoni">
+            <input type="submit" value="peperoni">
+          </form>
         
-         <br>
 
-        <form action="/ordering" method="post">
-            <label>Name:</label><br>
-            <input type="text" name="newname"><br><br>
+
+          <form action="/ordering" method= "post">
             
-            <label>order:</label><br>
-            <input type="text" name="neworder"><br><br><br>
+            <input type="hidden" id="001" name="pizza" value="margerita">
+            <input type="submit" value="margerita">
+          </form>
 
-            <input type="submit" value="Click here to order"></input>
-        </form>
-        <br><br>
-        
-            <p><a href="/">back</a></p>
 
-           
-    </body>
-</html>
+
+          <form action="/ordering" method= "post">
+            
+            <input type="hidden" id="001" name="pizza" value="chicken">
+            <input type="submit" value="chicken">
+          </form>
+
+
+
+
+          <form action="/ordering" method= "post">
+            
+            <input type="hidden" id="001" name="pizza" value="complete"  >
+            <input type="submit" value="order">
+          </form>
+
+
