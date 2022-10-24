@@ -1,10 +1,17 @@
 <!DOCTYPE html>
-
+<html lang="eu">
 <html>
     <head>
-        <title>orders</title>
+      <meta charset="UTF-8">
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/order.css') }}">
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400&display=swap" rel="stylesheet">
+      <title>Make an order</title>
     </head>
     <body>
+    <div class="order">
+      <div class="order_box">
       {% if orderlist == [] %}
       <p>No volunteers at the moment.</p>
   {% else %}
@@ -20,33 +27,31 @@
               </tr>
           {% endfor %}
       </table>
+      
   {% endif %}
   <br><br>
-
-
-
-
-
+</div>
+      <div class="order_buttons">
         <form action="/ordering" method= "post">
             
-            <input type="hidden" id="001" name="pizza" value="peperoni">
-            <input type="submit" value="peperoni">
+            <input type="hidden" id="001" name="pizza" value="4 meats">
+            <input type="submit" value="4 meats" class="button">
           </form>
         
 
 
           <form action="/ordering" method= "post">
             
-            <input type="hidden" id="001" name="pizza" value="margerita">
-            <input type="submit" value="margerita">
+            <input type="hidden" id="001" name="pizza" value="Cheese mix">
+            <input type="submit" value="cheese mix" class="button">
           </form>
 
 
 
           <form action="/ordering" method= "post">
             
-            <input type="hidden" id="001" name="pizza" value="chicken">
-            <input type="submit" value="chicken">
+            <input type="hidden" id="001" name="pizza" value="Luigi's special">
+            <input type="submit" value="Luigi's special" class="button">
           </form>
 
 
@@ -55,16 +60,14 @@
           <form action="/ordering" method= "post">
             
             <input type="hidden" id="001" name="pizza" value="complete"  >
-            <input type="submit" value="order">
+            <input type="submit" value="order" class="button">
           </form>
-
-
-
-
-
-
-
-
-           
+        </div>
+      </div>
+      <nav class="nav">
+        <a class="nav__link" href="http://127.0.0.1:5000/">Go back</a>
+    </nav>
+    <div class="background">
+    </div>
     </body>
 </html>

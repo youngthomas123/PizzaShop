@@ -4,7 +4,27 @@
         <meta http-equiv="refresh" content="1">
     </head>
     <body>
-        {%for order in orderlist%} 
+
+      {% if completedOrder == [] %}
+        <p> No finished orders at the moment</p>
+       {% else %}
+        <table>
+             <tr>
+               <th>Finished Orders</th>
+              </tr>
+          {% for order in completedOrder %}
+              <tr>
+                  <td>{{ order }}</td>
+              </tr>
+          {% endfor %}
+        </table>
+      {% endif %}
+
+        <br>
+
+
+
+        
         <table style="width:100%">
             <tr>
              
@@ -12,6 +32,7 @@
               <th>countdown </th>
               <th>time</th>
               <th>temp</th> 
+              
               <th>order </th>
               
             </tr>
@@ -21,12 +42,36 @@
               <td> {{oven_data["time"]}} </td>
               <td> {{oven_data["temp"]}}</td>
               
-              <td>{{order_id}} </td>
-              <td>{{order}} </td>
+              <td>{{oven_data["orderid"]}} </td>
+              <td>{{oven_data["order"]}} </td>
               
             </tr>
             
           </table>
-          {% endfor %}
+
+          <br>
+
+        {% if orderque == [] %}
+               <p> No orders in que</p>
+            {% else %}
+          <table>
+               <tr>
+                 <th>Order Que</th>
+                </tr>
+            {% for order in orderque %}
+                <tr>
+                    <td>{{ order }}</td>
+                </tr>
+            {% endfor %}
+          </table>
+        {% endif %}
+
+
+
+
+
+
+
+          
     </body>
 </html>

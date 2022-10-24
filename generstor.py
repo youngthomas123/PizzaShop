@@ -4,6 +4,7 @@ import requests
 from fhict_cb_01.CustomPymata4 import CustomPymata4
 from datetime import datetime
 import time
+import csv
 
 DHTPIN = 12
 RED_LED = 4
@@ -98,27 +99,26 @@ def oven1(t):
     global ovenResponse
     global timer
     global response
-    while True:
-        mins, secs = divmod(t, 60)
-        timer = '{:02d}.{:02d}'.format(mins, secs)
-        print(timer, end="\r")
-        t -= 1
-        board.displayShow(timer)
-        board.digital_write(GREEN_LED, 0)
-        board.digital_write(RED_LED, 1)
-        if t == 0:
-            timer_end()
+    with open('generations.csv', 'w', newline='') as gens:
+        while True:
+            mins, secs = divmod(t, 60)
+            timer = '{:02d}.{:02d}'.format(mins, secs)
+            print(timer, end="\r")
+            t -= 1
+            board.displayShow(timer)
+            board.digital_write(GREEN_LED, 0)
+            board.digital_write(RED_LED, 1)
+            if t == 0:
+                timer_end()
+                send_data_to_app()
+                break
+            time.sleep(0.7)
             send_data_to_app()
-            break
-        time.sleep(0.7)
-        send_data_to_app()
-        buttonState2 = board.digital_read(BUTTON2)
-        if (buttonState2[0] == BUTTON_PRESSED):
-            
-            manual_shut_off()
-            send_data_to_app()
-            break
-
+            buttonState2 = board.digital_read(BUTTON2)
+            if (buttonState2[0] == BUTTON_PRESSED):
+                manual_shut_off()
+                send_data_to_app()
+                break
 setup()
 time.sleep(0.1)
 while True:

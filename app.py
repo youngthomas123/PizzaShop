@@ -1,6 +1,4 @@
 
-       
-
 from random import randint
 from flask import Flask, render_template, request, redirect
 
@@ -50,9 +48,10 @@ def wrong_logon_page():
 
 order = []
 orderlist = []
+orderque = []
 @app.route('/ordering', methods = ['POST'])
 def add_order():
-    global order, orderlist
+    global order, orderlist,orderque
       
     received_data = request.form["pizza"]
     if (received_data !="complete") : 
@@ -62,6 +61,7 @@ def add_order():
         unique= str(randint(100, 999))
         order.insert(0,{"order_id" : unique})
         orderlist.append(order)
+        orderque.append(order)
         order = []
         print (order)
         print(orderlist)
@@ -75,7 +75,7 @@ def add_order():
 @app.route('/admin')
 # the page for mario and luigi
 def admin_page():
-    return render_template('admin.html', oven_data=oven_data,orderlist=orderlist)
+    return render_template('admin.html', oven_data=oven_data,completedOrder=completedOrder,orderque=orderque)
 
 
 
@@ -83,21 +83,33 @@ oven_data = {
     "ovenResponse" : 0,
     "countdown"    : 0,
     "time"         : 0,
-    "temp"         : 0
+    "temp"         : 0,
+    "orderid"      :'',
+    "order"        :''
 }
 
-
+i = 0
+completedOrder=[]
 @app.route('/orderUpdate', methods = ['POST'])
 def get_data():
-    global oven_data
+    global oven_data,orderlist,i,completedOrder,orderque
     receivedData = request.get_json()
     oven_data = {
     "ovenResponse" : receivedData["ovenResponse"],
     "countdown"    : receivedData["countdown"],
     "time"         : receivedData["time"],
-    "temp"         : receivedData["temp"]
+    "temp"         : receivedData["temp"],
+    "orderid"      : orderlist[i][0]["order_id"],
+    "order"        : orderlist[i][1:]
    }
-    
+    if(oven_data["ovenResponse"]=="Pizza is ready"):
+        
+        completedOrder.append(orderlist[i])
+        orderque.pop(0)
+        
+        i=i+1
+        print (i)
+
     print(oven_data)
     
     return redirect ('/admin')
@@ -123,15 +135,6 @@ def admin_login():
         return redirect('/wrong_login')
     
        
-
-
-
-
-
-    
-    
-
-    
 
 
 
