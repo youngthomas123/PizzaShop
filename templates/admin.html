@@ -1,12 +1,20 @@
 <html>
     <head>
+      <meta charset="UTF-8">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-        <meta http-equiv="refresh" content="1">
+        <title>Admin page</title>
+        <!--<meta http-equiv="refresh" content="1">-->
     </head>
     <body>
-
+      <div class="order">
+        <div class="no_order">
       {% if completedOrder == [] %}
         <p> No finished orders at the moment</p>
+        </div>
        {% else %}
         <table>
              <tr>
@@ -25,7 +33,7 @@
 
 
         
-        <table style="width:100%">
+        <table style="width:100%" class="order_table">
             <tr>
              
               <th>oven Response</th>
@@ -71,7 +79,8 @@
 
 
 
-
-          
+        </div>
+        <div class="background">
+        </div>
     </body>
 </html>

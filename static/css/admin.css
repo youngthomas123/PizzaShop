@@ -1,0 +1,70 @@
+body{
+    margin: 0;
+	font-family: 'Quicksand', sans-serif;
+	font-size: 10px;
+	color: #333333;
+	line-height: 1.6;
+}
+
+.background{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+	width: 100%;
+	height: 100vh;
+	background: url('admin_background.jpg') center no-repeat;
+	background-size: cover;
+}
+
+/* ADMIN INFORMATION */
+
+.order{
+    position: absolute;
+    top: 81px;
+    right: 0;
+    left: 50px;
+    z-index: 1000;
+    margin: auto 0;
+    font-size: 24px;
+	font-weight: 300;
+	color: #fff;
+}
+
+.order_table{
+    font-size: 24px;
+	font-weight: 300;
+	color: #fff;
+    text-shadow: 3px 3px 3px #333333;
+}
+
+p{
+    font-size: 20px;
+	font-weight: 100;
+	color: #fff;
+    text-shadow: 2px 2px 2px #333333;
+}
+
+th{
+    display: inline-block;
+	vertical-align: top;
+	position: relative;
+	text-decoration: none;
+    justify-content: space-between;
+	margin: 0 56px;
+}
+
+td{
+    display: inline-block;
+	vertical-align: top;
+	position: relative;
+	text-decoration: none;
+    justify-content: space-between;
+	margin: 20 100px;  
+}
+tr{
+	vertical-align: top;
+	position: relative;
+	text-decoration: none;
+    justify-content: space-between;
+	margin: 0 50px; 
+}
