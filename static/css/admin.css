@@ -20,8 +20,8 @@ body{
 
 .order{
     position: absolute;
-    top: 81px;
-    right: 0;
+    top: 317px;
+    right: 943px;
     left: 50px;
     z-index: 1000;
     margin: auto 0;
@@ -35,36 +35,34 @@ body{
 	font-weight: 300;
 	color: #fff;
     text-shadow: 3px 3px 3px #333333;
+	
 }
 
 p{
     font-size: 20px;
 	font-weight: 100;
 	color: #fff;
-    text-shadow: 2px 2px 2px #333333;
+    text-shadow: 1px 1px 1px #333333;
+}
+
+table{
+	border: 2.5px solid black;
+	background-color: bisque;
+	opacity: 0.7;
 }
 
 th{
     display: inline-block;
-	vertical-align: top;
-	position: relative;
-	text-decoration: none;
-    justify-content: space-between;
 	margin: 0 56px;
 }
 
 td{
     display: inline-block;
-	vertical-align: top;
-	position: relative;
-	text-decoration: none;
-    justify-content: space-between;
 	margin: 20 100px;  
 }
+
 tr{
-	vertical-align: top;
-	position: relative;
-	text-decoration: none;
-    justify-content: space-between;
-	margin: 0 50px; 
+	margin: 0 50px;
+	height: 20px;
+	width: 20px;
 }
