@@ -89,7 +89,7 @@ position: absolute;
 
 .nav__link{
     position: absolute;
-    top: 900px;
+    top: 850px;
     right: 0;
     left: 50px;
     z-index: 1000;
